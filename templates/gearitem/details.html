@@ -1,0 +1,38 @@
+<h1>{{ gearitem.name }}</h1>
+<table class="listing">
+  <tr>
+    <th>Zone</th>
+    <td{{ gearitem.zone }}</th>
+  </tr>
+  <tr>
+    <th>Boss/Source</th>
+    <td>{{ gearitem.source }}</th>
+  </tr>
+  <tr>
+    <th>Stats</th>
+    <td>
+      <ul>
+        <li>Primary: {{ gearitem.primary }}</li>
+        <li>Crit: {{ gearitem.crit }}</li>
+        <li>Haste: {{ gearitem.haste }}</li>
+        <li>Mastery: {{ gearitem.mastery }}</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'gearitem:comment' gearitem.id %}" method="post">
+{% csrf_token %}
+  <label for="note">Comment</label><br/>
+  <textarea name="note" id="comment" value=""></textarea><br/>
+  <input type="submit" value="Submit" />
+</form>
+
+<dl>
+  {% for comment in gearitem.comments %}
+    <dt>{{ comment.user }} posts:</dt>
+    <dd>{{ comment.note }}</dd>
+  {% endfor %}
+</dl>
