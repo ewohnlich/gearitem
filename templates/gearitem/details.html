@@ -1,38 +1,62 @@
-<h1>{{ gearitem.name }}</h1>
-<table class="listing">
-  <tr>
-    <th>Zone</th>
-    <td{{ gearitem.zone }}</th>
-  </tr>
-  <tr>
-    <th>Boss/Source</th>
-    <td>{{ gearitem.source }}</th>
-  </tr>
-  <tr>
-    <th>Stats</th>
-    <td>
-      <ul>
-        <li>Primary: {{ gearitem.primary }}</li>
-        <li>Crit: {{ gearitem.crit }}</li>
-        <li>Haste: {{ gearitem.haste }}</li>
-        <li>Mastery: {{ gearitem.mastery }}</li>
-      </ul>
-    </td>
-  </tr>
-</table>
+{% extends "base.html" %}
+{% load staticfiles %}
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-
-<form action="{% url 'gearitem:comment' gearitem.id %}" method="post">
-{% csrf_token %}
-  <label for="note">Comment</label><br/>
-  <textarea name="note" id="comment" value=""></textarea><br/>
-  <input type="submit" value="Submit" />
-</form>
-
-<dl>
-  {% for comment in gearitem.comments %}
-    <dt>{{ comment.user }} posts:</dt>
-    <dd>{{ comment.note }}</dd>
-  {% endfor %}
-</dl>
+{% block content %}
+  <div class="container">
+    <h1 id="item-banner">
+      <img src="http://us.media.blizzard.com/wow/icons/36/{{ gearitem.icon }}.jpg" />
+      <span class="item-quality{{ gearitem.quality }}">{{ gearitem.name }}</span>
+      {% if gearitem.nameDescription %} -
+        <span class="nameDescription">{{ gearitem.nameDescription }}</span>
+      {% endif %}
+    </h1>
+    <a href="{% url 'gearitem:listing' %}">&larr; Back to all items</a>
+    
+    <a class="navbar-right" href="http://www.wowhead.com/item={{ gearitem.id }}">
+      <img src="{% static "wowhead.png" %}" />
+      View on wowhead.com
+    </a>
+    
+    <h4>Zone</h4>
+    {{ gearitem.zone }}
+    
+    <h4>Boss/Source</h4>
+    {{ gearitem.source }}
+    
+    <h4>Slot</h4>
+    {{ gearitem.slotName }}
+    
+    <h4>Stats</h4>
+    <table class="table table-striped">
+      <tr>
+        <th>Agility</th>
+        <td>{{ gearitem.agility }}</th>
+      </tr>
+      <tr>
+        <th>Crit</th>
+        <td>{{ gearitem.crit }}</td>
+      </tr>
+      <tr>
+        <th>Haste</th>
+        <td>{{ gearitem.haste }}</th>
+      </tr>
+      <tr>
+        <th>Mastery</th>
+        <td>{{ gearitem.mastery }}</td>
+      </tr>
+      <tr>
+        <th>Multistrike</th>
+        <td>{{ gearitem.multistrike }}</td>
+      </tr>
+      <tr>
+        <th>Versatility</th>
+        <td>{{ gearitem.versatility }}</td>
+      </tr>
+    </table>
+    
+    <h4>Sockets</h4>
+    nyi
+    
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+  </div>
+{% endblock %}

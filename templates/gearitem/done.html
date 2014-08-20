@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load i18n admin_urls %}
+
+{% block content %}
+  <div class="container">
+    Done.<br/><br/>
+    <a href="{% url 'admin:gearitem_gearitem_changelist' %}">&larr; Go to gearitems</a>
+  </div>
+{% endblock %}

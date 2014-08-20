@@ -1,13 +1,40 @@
+{% extends "base.html" %}
 {% load staticfiles %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'huntertools/bootstrap/css/bootstrap.min.css' %}" />
-
-{% if name_gear_list %}
-    <ul>
-    {% for gearitem in name_gear_list %}
-        <li><a href="{% url 'gearitem:details' gearitem.id %}">{{ gearitem.name }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No gear items are available.</p>
-{% endif %}
+{% block content %}
+  <div class="container">
+    {% if name_gear_list %}
+      <table class="table" id="items-table">
+        <thead>
+          <tr>
+            <th colspan="2">Name</th>
+            <th>Zone</th>
+            <th>Boss/Source</th>
+            <th>Slot</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for gearitem in name_gear_list %}
+            <tr>
+              <td>
+                <a href="{% url 'gearitem:details' gearitem.id %}">
+                  <img src="http://us.media.blizzard.com/wow/icons/18/{{ gearitem.icon }}.jpg" />
+                  <span class="item-quality{{ gearitem.quality }}">{{ gearitem.name }}</span>
+                  {% if gearitem.nameDescription %} -
+                    <span class="nameDescription">{{ gearitem.nameDescription }}</span>
+                  {% endif %}
+                </a>
+              </td>
+              <td><a href="http://wod.wowhead.com/item={{ gearitem.id }}"><img src="{% static "wowhead.png" %}"/></a></td>
+              <td>{{ gearitem.zone }}</td>
+              <td>{{ gearitem.source }}</td>
+              <td>{{ gearitem.slotName }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No gear items are available.</p>
+    {% endif %}
+  </div>
+{% endblock %}

@@ -1,25 +1,40 @@
 from django.db import models
+from tools import slots
 
-class Comment(models.Model):
-    gearid = models.CharField(max_length=80)
-    user = models.CharField(max_length=80)
-    note = models.TextField()
-
-    def __unicode__(self):
-       return self.user + ': ' + self.note[:20]
+socket_choices=[('red','Red'),
+                ('yellow','Yellow'),
+                ('blue','Blue'),
+                ('meta','Meta'),
+                ('chromatic','Chromatic'),
+                ('none','(No socket)'),
+                   ]
 
 # Create your models here.
 class GearItem(models.Model):
     name = models.CharField(max_length=80)
+    nameDescription = models.CharField(max_length=80)
     zone = models.CharField(max_length=80)
     source = models.CharField(max_length=80)
-    primary = models.IntegerField(default=0)
+    agility = models.IntegerField(default=0)
     crit = models.IntegerField(default=0)
     haste = models.IntegerField(default=0)
     mastery = models.IntegerField(default=0)
+    multistrike = models.IntegerField(default=0)
+    versatility = models.IntegerField(default=0)
+    ilvl = models.IntegerField(default=0)
+    icon = models.CharField(max_length=80)
+    slot = models.IntegerField(default=0)
+    quality = models.IntegerField(default=0)
+    socket1 = models.CharField(max_length=20,
+                               choices=socket_choices,)
+    socket2 = models.CharField(max_length=20,
+                               choices=socket_choices,)
+    socket3 = models.CharField(max_length=20,
+                               choices=socket_choices,)
+    socket_bonus = models.CharField(max_length=80)
     
-    def comments(self):
-      return Comment.objects.filter(gearid=self.id)
+    def slotName(self):
+      return slots[self.slot]
 
     def __unicode__(self):
-       return self.name
+       return self.name + ' (' + (self.nameDescription or 'normal') + ')'
