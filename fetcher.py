@@ -21,10 +21,12 @@ def do_item(data):
 def fetch_items(ids=[]):
   gear = []
   if not ids:
-    ids = range(100000,111000)
+    ids = range(90000,100000)
+    #ids = range(100000,111000)
   for i in ids:
     print i
-    data = json.load(urllib.urlopen('http://us.battle.net/api/wow/item/%d' % i))
+    data = json.load(urllib.urlopen('https://us.api.battle.net/wow/item/%d?apikey=n3kp7varcf4wrtkmu3qcgqzszgtyznmb' % i))
+    #data = json.load(urllib.urlopen('http://us.battle.net/api/wow/item/%d' % i))
     if 'status' in data:
       continue
     if data['inventoryType'] in good_inventory_slots and data['itemLevel'] >= 553:
