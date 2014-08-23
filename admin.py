@@ -45,10 +45,10 @@ class GearItemAdmin(admin.ModelAdmin):
       obj.versatility = gear['stats'].get('versatility',0)
       obj.multistrike = gear['stats'].get('multistrike',0)
       if gear.get('sockets'):
-        obj.socket1 = gear['sockets']['sockets'][0]['type']
-        obj.socket2 = len(gear['sockets']['sockets']) > 1 and gear['sockets']['sockets'][1]['type']
-        obj.socket3 = len(gear['sockets']['sockets']) > 2 and gear['sockets']['sockets'][2]['type']
-        obj.socket_bonus = gear['sockets']['socketBonus'].replace('+','')
+        obj.socket1 = gear['sockets']['sockets'][0]['type'].lower() or 'none'
+        obj.socket2 = len(gear['sockets']['sockets']) > 1 and gear['sockets']['sockets'][1]['type'].lower() or 'none'
+        obj.socket3 = len(gear['sockets']['sockets']) > 2 and gear['sockets']['sockets'][2]['type'].lower() or 'none'
+        obj.socket_bonus = gear['sockets']['socketBonus'].replace('+','') or ''
       obj.icon = gear['icon']
       obj.slot = gear['slot']
       obj.quality = gear['quality']

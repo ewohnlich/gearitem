@@ -55,7 +55,31 @@
     </table>
     
     <h4>Sockets</h4>
-    nyi
+    <ul id="sockets">
+      {% if gearitem.socket1 %}
+        <li>
+          <img src="{% static 'socket-'|add:gearitem.socket1|add:'.gif' %}" />
+          <span>{{ gearitem.socket1|capfirst }} Socket</span>
+        </li>
+      {% endif %}
+      {% if gearitem.socket2 %}
+        <li>
+          <img src="{% static 'socket-'|add:gearitem.socket2|add:'.gif' %}" />
+          <span>{{ gearitem.socket2|capfirst }} Socket</span>
+        </li>
+      {% endif %}
+      {% if gearitem.socket3 != 'none' %}
+        <li>
+          <img src="{% static 'socket-'|add:gearitem.socket3|add:'.gif' %}" />
+          <span>{{ gearitem.socket3|capfirst }} Socket</span>
+        </li>
+      {% endif %}
+      {% if gearitem.socket_bonus %}
+        <li>
+          Socket Bonus: +{{ gearitem.socket_bonus }}
+        </li>
+      {% endif %}
+    </ul>
     
     {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
   </div>
