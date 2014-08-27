@@ -6,7 +6,7 @@ from django.shortcuts import render
 import fetcher
 
 # Register your models here.
-from gearitem.models import GearItem
+from gearitem.models import GearItem, Gem
 
 class GearItemAdmin(admin.ModelAdmin):
     def get_urls(self):
@@ -55,3 +55,4 @@ class GearItemAdmin(admin.ModelAdmin):
       obj.save()
 
 admin.site.register(GearItem, GearItemAdmin)
+admin.site.register(Gem)

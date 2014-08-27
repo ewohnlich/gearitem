@@ -9,6 +9,22 @@ socket_choices=[('red','Red'),
                 ('none','(No socket)'),
                    ]
 
+slot_choices = [(1,"Head"),
+                (2,"Neck"),
+                (3,"Shoulder"),
+                (5,"Chest"),
+                (6,"Waist"),
+                (7,"Legs"),
+                (8,"Feet"),
+                (9,"Wrist"),
+                (10,"Hands"),
+                (11,"Finger"),
+                (12,"Trinket"),
+                (20,"Chest (gown)")]
+quality_choices = [(3,"Superior"),
+                   (4,"Epic"),
+                   (5,"Legendary")]
+
 # Create your models here.
 class GearItem(models.Model):
     name = models.CharField(max_length=80)
@@ -23,8 +39,8 @@ class GearItem(models.Model):
     versatility = models.IntegerField(default=0)
     ilvl = models.IntegerField(default=0)
     icon = models.CharField(max_length=80)
-    slot = models.IntegerField(default=0)
-    quality = models.IntegerField(default=0)
+    slot = models.IntegerField(default=0,choices=slot_choices)
+    quality = models.IntegerField(default=0,choices=quality_choices)
     socket1 = models.CharField(max_length=20,blank=True,
                                choices=socket_choices,)
     socket2 = models.CharField(max_length=20,blank=True,
@@ -38,3 +54,15 @@ class GearItem(models.Model):
 
     def __unicode__(self):
        return self.name + ' (' + (self.nameDescription or 'normal') + ')'
+
+class Gem(models.Model):
+    name = models.CharField(max_length=80)
+    agility = models.IntegerField(default=0,blank=True)
+    crit = models.IntegerField(default=0,blank=True)
+    haste = models.IntegerField(default=0,blank=True)
+    mastery = models.IntegerField(default=0,blank=True)
+    multistrike = models.IntegerField(default=0,blank=True)
+    versatility = models.IntegerField(default=0,blank=True)
+
+    def __unicode__(self):
+       return self.name
