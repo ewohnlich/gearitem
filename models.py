@@ -27,6 +27,7 @@ quality_choices = [(3,"Superior"),
 
 # Create your models here.
 class GearItem(models.Model):
+    id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=80)
     nameDescription = models.CharField(max_length=80,blank=True)
     zone = models.CharField(max_length=80)
