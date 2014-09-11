@@ -35,3 +35,7 @@ stats_used = {3:'agility',
               51:'multistrike',
               52:'versatility',
              }
+
+gems_stats = {76692:{'agility':10,'crit':0,'haste':0,'mastery':0,'multistrike':0,'versatility':0},
+        
+        }
