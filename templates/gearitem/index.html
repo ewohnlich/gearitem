@@ -8,6 +8,7 @@
         <thead>
           <tr>
             <th colspan="2">Name</th>
+            <th>ilvl</th>
             <th>Zone</th>
             <th>Boss/Source</th>
             <th>Slot</th>
@@ -18,7 +19,12 @@
             <tr>
               <td>
                 <a href="{% url 'gearitem:details' gearitem.id %}">
-                  <img src="http://us.media.blizzard.com/wow/icons/18/{{ gearitem.icon }}.jpg" />
+                  <!-- use wowhead for ilvl 600+ -->
+                  {% if gearitem.id >= 600 %}
+                    <img src="http://wow.zamimg.com/images/wow/icons/small/{{ gearitem.icon }}.jpg" />
+                  {% else %}
+                    <img src="http://us.media.blizzard.com/wow/icons/18{{ gearitem.icon }}.jpg" />
+                  {% endif %}
                   <span class="item-quality{{ gearitem.quality }}">{{ gearitem.name }}</span>
                   {% if gearitem.nameDescription %} -
                     <span class="nameDescription">{{ gearitem.nameDescription }}</span>
@@ -26,6 +32,7 @@
                 </a>
               </td>
               <td><a href="http://wod.wowhead.com/item={{ gearitem.id }}"><img src="{% static "wowhead.png" %}"/></a></td>
+              <td>{{ gearitem.ilvl }}</td>
               <td>{{ gearitem.zone }}</td>
               <td>{{ gearitem.source }}</td>
               <td>{{ gearitem.slotName }}</td>

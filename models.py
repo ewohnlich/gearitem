@@ -9,9 +9,11 @@ socket_choices=[('red','Red'),
                 ('none','(No socket)'),
                    ]
 
-slot_choices = [(1,"Head"),
+slot_choices = [(15,"Weapon"),
+                (1,"Head"),
                 (2,"Neck"),
                 (3,"Shoulder"),
+                (16,"Cloak"),
                 (5,"Chest"),
                 (6,"Waist"),
                 (7,"Legs"),
@@ -38,8 +40,11 @@ class GearItem(models.Model):
     mastery = models.IntegerField(default=0)
     multistrike = models.IntegerField(default=0)
     versatility = models.IntegerField(default=0)
+    weapon_min = models.FloatField(default=0)
+    weapon_max = models.FloatField(default=0)
+    weapon_speed = models.FloatField(default=0)
     ilvl = models.IntegerField(default=0)
-    icon = models.CharField(max_length=80)
+    icon = models.CharField(max_length=80,default="inv_misc_questionmark")
     slot = models.IntegerField(default=0,choices=slot_choices)
     quality = models.IntegerField(default=0,choices=quality_choices)
     socket1 = models.CharField(max_length=20,blank=True,
@@ -54,9 +59,10 @@ class GearItem(models.Model):
       return slots[self.slot]
 
     def __unicode__(self):
-       return self.name + ' (' + (self.nameDescription or 'normal') + ')'
+       return self.nameDescription and self.name + ' (' + (self.nameDescription) + ')' or self.name
 
 class Gem(models.Model):
+    id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=80)
     agility = models.IntegerField(default=0,blank=True)
     crit = models.IntegerField(default=0,blank=True)

@@ -24,18 +24,14 @@ slots = ["None",
          "Held In Off-hand",
          "Ammo",
          "Thrown",
-         "Ranged Right",
+         "Ranged",
          "Relic"]
-good_inventory_slots = [1,2,3,5,6,7,8,9,10,11,12,15,16,20]
+good_inventory_slots = [1,2,3,5,6,7,8,9,10,11,12,15,16,20,26]
 
 stats_used = {3:'agility',
               32:'crit',
               36:'haste',
               49:'mastery',
-              51:'multistrike',
-              52:'versatility',
+              59:'multistrike',
+              40:'versatility',
              }
-
-gems_stats = {76692:{'agility':10,'crit':0,'haste':0,'mastery':0,'multistrike':0,'versatility':0},
-        
-        }

@@ -4,7 +4,12 @@
 {% block content %}
   <div class="container">
     <h1 id="item-banner">
-      <img src="http://us.media.blizzard.com/wow/icons/36/{{ gearitem.icon }}.jpg" />
+      <!-- use wowhead for ilvl 600+ -->
+      {% if gearitem.id >= 600 %}
+        <img src="http://wow.zamimg.com/images/wow/icons/large/{{ gearitem.icon }}.jpg" />
+      {% else %}
+        <img src="http://us.media.blizzard.com/wow/icons/36/{{ gearitem.icon }}.jpg" />
+      {% endif %}
       <span class="item-quality{{ gearitem.quality }}">{{ gearitem.name }}</span>
       {% if gearitem.nameDescription %} -
         <span class="nameDescription">{{ gearitem.nameDescription }}</span>
@@ -54,7 +59,7 @@
       </tr>
     </table>
     
-    <h4>Sockets</h4>
+    <!-- <h4>Sockets</h4>
     <ul id="sockets">
       {% if gearitem.socket1 != 'none'  %}
         <li>
@@ -79,7 +84,7 @@
           Socket Bonus: +{{ gearitem.socket_bonus }}
         </li>
       {% endif %}
-    </ul>
+    </ul> -->
     
     {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
   </div>
