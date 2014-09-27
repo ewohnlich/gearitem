@@ -60,6 +60,9 @@ class GearItem(models.Model):
 
     def __unicode__(self):
        return self.nameDescription and self.name + ' (' + (self.nameDescription) + ')' or self.name
+    
+    class Meta:
+      ordering = ['-ilvl','name']
 
 class Gem(models.Model):
     id = models.IntegerField(primary_key=True)
