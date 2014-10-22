@@ -18,9 +18,7 @@ class GearItemAdmin(admin.ModelAdmin):
       return my_urls + urls
 
     def update_view(self,request):
-      ids = []
-      for obj in GearItem.objects.all():
-        ids.append(obj.id)
+      ids = GearItem.objects.values_list('id',flat=True)
       for data in fetcher.fetch_items(ids):
         if data: # might be null if it can't find the id - like new items
           self.update_gear(data)
@@ -37,10 +35,10 @@ class GearItemAdmin(admin.ModelAdmin):
       return render(request, 'gearitem/done.html')
 
     def update_gear(self, gear):
-      print 'Updating item: %d' % data['id']
+      print 'Updating item: %d' % gear['id']
       obj = GearItem.objects.get(id=gear['id'])
       if obj.name != gear['name']:
-        print 'Warning: %d renamed from %s to %s' % (gear[id],obj.name,gear['name'])
+        print 'Warning: %d renamed from %s to %s' % (gear['id'],obj.name,gear['name'])
       obj.name = gear['name']
       obj.nameDescription = gear['desc']
       obj.agility = gear['stats'].get('agility',0)
