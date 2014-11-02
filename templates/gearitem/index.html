@@ -3,14 +3,20 @@
 
 {% block content %}
   <div class="container">
+    {% if view.slotName %}
+      <h3>{{ view.slotName }} items</h3>
+    {% endif %}
+    {% include "gearitem/pagination.html" %}
+
     {% if name_gear_list %}
-      <table class="table" id="items-table">
+      <small>sort by <a href="{% url 'gearitem:listing' %}">name</a> | <a href="{% url 'gearitem:ilvl' %}">ilvl</a></small>
+      <table class="table tablesorter" id="items-table">
         <thead>
           <tr>
             <th colspan="2">Name</th>
             <th>ilvl</th>
-            <th>Zone</th>
             <th>Boss/Source</th>
+            <th>Zone</th>
             <th>Slot</th>
           </tr>
         </thead>
@@ -19,23 +25,22 @@
             <tr>
               <td>
                 <a href="{% url 'gearitem:details' gearitem.id %}">
-                  <!-- use wowhead for ilvl 600+ -->
-                  {% if gearitem.id >= 600 %}
-                    <img src="http://wow.zamimg.com/images/wow/icons/small/{{ gearitem.icon }}.jpg" />
+                  {% if gearitem.icon %}
+                    <img src="http://us.media.blizzard.com/wow/icons/18/{{ gearitem.icon }}.jpg" />
                   {% else %}
-                    <img src="http://us.media.blizzard.com/wow/icons/18{{ gearitem.icon }}.jpg" />
+                    <img src="http://us.media.blizzard.com/wow/icons/18/inv_misc_questionmark.jpg" />
                   {% endif %}
                   <span class="item-quality{{ gearitem.quality }}">{{ gearitem.name }}</span>
-                  {% if gearitem.nameDescription %} -
+                  {% if gearitem.nameDescription and 'Season' not in gearitem.nameDescription %} -
                     <span class="nameDescription">{{ gearitem.nameDescription }}</span>
                   {% endif %}
                 </a>
               </td>
-              <td><a href="http://wod.wowhead.com/item={{ gearitem.id }}"><img src="{% static "wowhead.png" %}"/></a></td>
-              <td>{{ gearitem.ilvl }}</td>
-              <td>{{ gearitem.zone }}</td>
+              <td><a href="http://www.wowhead.com/item={{ gearitem.id }}"><img src="{% static "wowhead.png" %}"/></a></td>
+              <td>{{ gearitem.maxIlvl }}</td>
               <td>{{ gearitem.source }}</td>
-              <td>{{ gearitem.slotName }}</td>
+              <td>{% if gearitem.zone %}<a href="{% url 'gearitem:zone' gearitem.zone %}">{{ gearitem.zone }}</a>{% endif %}</td>
+              <td><a href="{% url 'gearitem:slot' gearitem.slot %}">{{ gearitem.slotName }}</a></td>
             </tr>
           {% endfor %}
         </tbody>
@@ -43,5 +48,13 @@
     {% else %}
       <p>No gear items are available.</p>
     {% endif %}
+    {% include "gearitem/pagination.html" %}
+
+    <script type="text/javascript">
+      $(function(){
+        $("#items-table").tablesorter();
+      });
+    </script>
+
   </div>
 {% endblock %}

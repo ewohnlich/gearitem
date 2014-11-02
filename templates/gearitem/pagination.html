@@ -1,0 +1,17 @@
+{% if is_paginated %}
+  <ul class="pagination">
+    {% if page_obj.has_previous %}
+      <li><a href="{{ view.request.META.PATH_INFO }}?page={{ page_obj.previous_page_number }}">&lt;</a></li>
+    {% endif %}
+    {% for pagenum in page_obj.paginator.page_range %}
+      <li{% if pagenum == page_obj.number %} class="active"{% endif %}><a href="{{ view.request.META.PATH_INFO }}?page={{ pagenum }}">{{ pagenum }}</a></li>
+    {% endfor %}
+    {% if page_obj.has_next %}
+      <li><a href="{{ view.request.META.PATH_INFO }}?page={{ page_obj.next_page_number }}">&gt;</a></li>
+    {% endif %}
+  </ul>
+  {% if view.kwargs.slot %}
+    <br/>
+    <a href="{% url 'gearitem:listing' %}">&larr; All items</a>
+  {% endif %}
+{% endif %}

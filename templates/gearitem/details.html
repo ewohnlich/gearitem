@@ -5,11 +5,7 @@
   <div class="container">
     <h1 id="item-banner">
       <!-- use wowhead for ilvl 600+ -->
-      {% if gearitem.id >= 600 %}
-        <img src="http://wow.zamimg.com/images/wow/icons/large/{{ gearitem.icon }}.jpg" />
-      {% else %}
-        <img src="http://us.media.blizzard.com/wow/icons/36/{{ gearitem.icon }}.jpg" />
-      {% endif %}
+      <img src="http://us.media.blizzard.com/wow/icons/36/{{ gearitem.icon }}.jpg" />
       <span class="item-quality{{ gearitem.quality }}">{{ gearitem.name }}</span>
       {% if gearitem.nameDescription %} -
         <span class="nameDescription">{{ gearitem.nameDescription }}</span>
@@ -31,60 +27,67 @@
     <h4>Slot</h4>
     {{ gearitem.slotName }}
     
-    <h4>Stats</h4>
-    <table class="table table-striped">
-      <tr>
-        <th>Agility</th>
-        <td>{{ gearitem.agility }}</th>
-      </tr>
-      <tr>
-        <th>Crit</th>
-        <td>{{ gearitem.crit }}</td>
-      </tr>
-      <tr>
-        <th>Haste</th>
-        <td>{{ gearitem.haste }}</th>
-      </tr>
-      <tr>
-        <th>Mastery</th>
-        <td>{{ gearitem.mastery }}</td>
-      </tr>
-      <tr>
-        <th>Multistrike</th>
-        <td>{{ gearitem.multistrike }}</td>
-      </tr>
-      <tr>
-        <th>Versatility</th>
-        <td>{{ gearitem.versatility }}</td>
-      </tr>
-    </table>
-    
-    <!-- <h4>Sockets</h4>
-    <ul id="sockets">
-      {% if gearitem.socket1 != 'none'  %}
-        <li>
-          <img src="{% static 'socket-'|add:gearitem.socket1|add:'.gif' %}" />
-          <span>{{ gearitem.socket1|capfirst }} Socket</span>
-        </li>
-      {% endif %}
-      {% if gearitem.socket2 != 'none' %}
-        <li>
-          <img src="{% static 'socket-'|add:gearitem.socket2|add:'.gif' %}" />
-          <span>{{ gearitem.socket2|capfirst }} Socket</span>
-        </li>
-      {% endif %}
-      {% if gearitem.socket3 != 'none' %}
-        <li>
-          <img src="{% static 'socket-'|add:gearitem.socket3|add:'.gif' %}" />
-          <span>{{ gearitem.socket3|capfirst }} Socket</span>
-        </li>
-      {% endif %}
-      {% if gearitem.socket_bonus %}
-        <li>
-          Socket Bonus: +{{ gearitem.socket_bonus }}
-        </li>
-      {% endif %}
-    </ul> -->
+    {% if not gearitem.gearcontext_set.all %}
+      <h4>Stats</h4>
+      <p>No contexts are defined for this item; probably old MoP item</p>
+      <table class="table table-striped">
+        <tr>
+          <th>Agility</th>
+          <td>{{ gearitem.agility }}</th>
+        </tr>
+        <tr>
+          <th>Crit</th>
+          <td>{{ gearitem.crit }}</td>
+        </tr>
+        <tr>
+          <th>Haste</th>
+          <td>{{ gearitem.haste }}</th>
+        </tr>
+        <tr>
+          <th>Mastery</th>
+          <td>{{ gearitem.mastery }}</td>
+        </tr>
+        <tr>
+          <th>Multistrike</th>
+          <td>{{ gearitem.multistrike }}</td>
+        </tr>
+        <tr>
+          <th>Versatility</th>
+          <td>{{ gearitem.versatility }}</td>
+        </tr>
+      </table>    
+    {% else %}
+      <h4>Contexts</h4>
+      {% for context in gearitem.gearcontext_set.all %}
+        <h5>{{ context.contextPretty }}: {{ context.ilvl }}</h5>
+        <table class="table table-striped">
+          <tr>
+            <th>Agility</th>
+            <td>{{ context.agility }}</th>
+          </tr>
+          <tr>
+            <th>Crit</th>
+            <td>{{ context.crit }}</td>
+          </tr>
+          <tr>
+            <th>Haste</th>
+            <td>{{ context.haste }}</th>
+          </tr>
+          <tr>
+            <th>Mastery</th>
+            <td>{{ context.mastery }}</td>
+          </tr>
+          <tr>
+            <th>Multistrike</th>
+            <td>{{ context.multistrike }}</td>
+          </tr>
+          <tr>
+            <th>Versatility</th>
+            <td>{{ context.versatility }}</td>
+          </tr>
+        </table>
+      {% endfor %}
+    {% endif %}
     
     {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
   </div>

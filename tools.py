@@ -34,4 +34,5 @@ stats_used = {3:'agility',
               49:'mastery',
               59:'multistrike',
               40:'versatility',
+              73:'agility', # really agility/int stat
              }
