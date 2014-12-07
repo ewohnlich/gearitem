@@ -36,7 +36,13 @@
                   {% endif %}
                 </a>
               </td>
-              <td><a href="http://www.wowhead.com/item={{ gearitem.id }}"><img src="{% static "wowhead.png" %}"/></a></td>
+              <td>
+                {% if gearitem.has_savage %}
+                  <a href="http://www.wowhead.com/item={{ gearitem.clean_id }}" rel="bonus=66"><img src="{% static "wowhead.png" %}"/></a>
+                {% else %}
+                  <a href="http://www.wowhead.com/item={{ gearitem.id }}"><img src="{% static "wowhead.png" %}"/></a>
+                {% endif %}                
+              </td>
               <td>{{ gearitem.maxIlvl }}</td>
               <td>{{ gearitem.source }}</td>
               <td>{% if gearitem.zone %}<a href="{% url 'gearitem:zone' gearitem.zone %}">{{ gearitem.zone }}</a>{% endif %}</td>

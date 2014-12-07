@@ -55,6 +55,12 @@ class GearItem(models.Model):
                                choices=socket_choices,)
     socket_bonus = models.CharField(max_length=80,blank=True)
     
+    def has_savage(self):
+      return self.id > 999999 and str(self.id).endswith('999')
+    
+    def clean_id(self):
+      return (self.id-999)/1000
+    
     def slotName(self):
       return slots[self.slot]
     
